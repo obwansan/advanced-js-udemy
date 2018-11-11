@@ -63,7 +63,7 @@ Question.prototype.logQuestionAndAnswers = function() {
 
 // method to check the user's answers
 Question.prototype.checkAnswer = function(userAnswer, correctAnswer) {
-    if (userAnswer === correctAnswer) {
+    if (userAnswer == correctAnswer) {
       console.log('Well done, that\'s the correct answer!');
     } else {
       console.log('Sorry, wrong answer. Try again');
@@ -82,12 +82,12 @@ var coursesQuestion = 'Which is the best online web development course platform?
 var coursesAnswers = ['Pluralsight', 'Teamtreehouse', 'Udemy'];
 var correctCourseAnswer = 2;
 
-// Create a couple of questions (question objects) using the constructor
+// Create some questions (question objects) using the constructor
 var bestProgLang = new Question(languageQuestion, languageAnswers, correctLanguageAnswer);
 var jsCourseInstructor = new Question(instructorQuestion, instructorAnswers, correctInstructorAnswer);
 var bestCoursePlatform = new Question(coursesQuestion, coursesAnswers, correctCourseAnswer);
 
-// Store them inside an array
+// Store the question objects inside an array
 var questions = [bestProgLang, jsCourseInstructor, bestCoursePlatform];
 
 // Get and return a random question object
@@ -96,14 +96,14 @@ function getRandQuestionObj() {
   return questions[rndNum];
 }
 
-var randQuestionObj = getRandQuestionObj();
-
-function playGame(questionObj) {
-  questionObj.logQuestionAndAnswers();
-  var userAnswer = parseInt(prompt('Enter the number of the correct answer'));
-  var correctAnswer = questionObj.correctAnswer;
-  questionObj.checkAnswer(userAnswer, correctAnswer);
+function playGame() {
+  do {
+    var randQuestionObj = getRandQuestionObj();
+    randQuestionObj.logQuestionAndAnswers();
+    var userAnswer = prompt('Enter the number of the correct answer');
+    var correctAnswer = randQuestionObj.correctAnswer;
+    randQuestionObj.checkAnswer(userAnswer, correctAnswer);
+  } while (userAnswer !== 'exit')
 }
 
-getRandQuestionObj();
-playGame(randQuestionObj);
+playGame();
