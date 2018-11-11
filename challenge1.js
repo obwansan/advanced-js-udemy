@@ -72,3 +72,10 @@ var questions = [bestProgLang, jsCourseInstructor, bestCoursePlatform];
 //   };
 //
 // logQuestionAndAnswers();
+
+// Refactor to an IIFE
+(function () {
+  var rndNum = Math.floor(Math.random() * 3);
+  var randQuestion = questions[rndNum];
+  randQuestion.logQuestionAndAnswers();
+})();
