@@ -27,6 +27,22 @@ that all your code is private and doesn't interfere with the other programmers c
 (Hint: we learned a special technique to do exactly that).
 */
 
+/*
+--- Expert level ---
+
+8. After you display the result, display the next random question, so that the game never ends
+(Hint: write a function for this and call it right after displaying the result)
+
+9. Be careful: after Task 8, the game literally never ends. So include the option to quit the game
+if the user writes 'exit' instead of the answer. In this case, DON'T call the function from task 8.
+
+10. Track the user's score to make the game more fun! So each time an answer is correct,
+add 1 point to the score (Hint: I'm going to use the power of closures for this, but you
+don't have to, just do this with the tools you feel more comfortable at this point).
+
+11. Display the score in the console. Use yet another method for this.
+*/
+
 // A function constructor is a function that is used to create objects with
 // the same properties / methods (passed in as arguments).
 var Question = function(question, answers, correctAnswer) {
@@ -74,12 +90,20 @@ var bestCoursePlatform = new Question(coursesQuestion, coursesAnswers, correctCo
 // Store them inside an array
 var questions = [bestProgLang, jsCourseInstructor, bestCoursePlatform];
 
-// log a random question and its answers to the console (using an IIFE)
-(function () {
+// Get and return a random question object
+function getRandQuestionObj() {
   var rndNum = Math.floor(Math.random() * 3);
-  var randQuestion = questions[rndNum];
-  randQuestion.logQuestionAndAnswers();
-  var answer = parseInt(prompt('Enter the number of the correct answer'));
-  var correctAnswer = randQuestion.correctAnswer;
-  randQuestion.checkAnswer(answer, correctAnswer);
-})();
+  return questions[rndNum];
+}
+
+var randQuestionObj = getRandQuestionObj();
+
+function playGame(questionObj) {
+  questionObj.logQuestionAndAnswers();
+  var userAnswer = parseInt(prompt('Enter the number of the correct answer'));
+  var correctAnswer = questionObj.correctAnswer;
+  questionObj.checkAnswer(userAnswer, correctAnswer);
+}
+
+getRandQuestionObj();
+playGame(randQuestionObj);
