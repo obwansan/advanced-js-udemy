@@ -54,7 +54,7 @@ var Question = function(question, answers, correctAnswer) {
 // method to log the question and its answers to the console
 Question.prototype.logQuestionAndAnswers = function() {
     console.log(this.question);
-    // Have to assign it to a variable or doesn't work (why?)
+    // Have to assign this.answers to a variable or forEach doesn't work (why?)
     var answers = this.answers;
     answers.forEach(function(el) {
       console.log(answers.indexOf(el) + ': ' + el);
@@ -62,11 +62,19 @@ Question.prototype.logQuestionAndAnswers = function() {
 };
 
 // method to check the user's answers
+// score works because the checkAnswer method of the random question object
+// (randQuestionObj) which is called in playGame() has access to the score
+// variable in the global scope.
 Question.prototype.checkAnswer = function(userAnswer, correctAnswer) {
     if (userAnswer == correctAnswer) {
-      console.log('Well done, that\'s the correct answer!');
+      score += 1;
+      console.log('Correct answer!');
+      console.log('Your current score is: ' + score);
+      console.log('-----------------------------------------');
     } else {
-      console.log('Sorry, wrong answer. Try again');
+      console.log('Wrong answer. Try again');
+      console.log('Your current score is: ' + score);
+      console.log('-----------------------------------------');
     }
 };
 
@@ -89,6 +97,7 @@ var bestCoursePlatform = new Question(coursesQuestion, coursesAnswers, correctCo
 
 // Store the question objects inside an array
 var questions = [bestProgLang, jsCourseInstructor, bestCoursePlatform];
+var score = 0;
 
 // Get and return a random question object
 function getRandQuestionObj() {
