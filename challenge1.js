@@ -27,7 +27,8 @@ that all your code is private and doesn't interfere with the other programmers c
 (Hint: we learned a special technique to do exactly that).
 */
 
-// function constructor called Question
+// A function constructor is a function that is used to create objects with
+// the same properties / methods (passed in as arguments).
 var Question = function(question, answers, correctAnswer) {
   this.question = question;
   this.answers = answers;
@@ -44,17 +45,26 @@ Question.prototype.logQuestionAndAnswers = function() {
     });
 };
 
+// method to check the user's answers
+Question.prototype.checkAnswer = function(userAnswer, correctAnswer) {
+    if (userAnswer === correctAnswer) {
+      console.log('Well done, that\'s the correct answer!');
+    } else {
+      console.log('Sorry, wrong answer. Try again');
+    }
+};
+
 var languageQuestion = 'What is the best programming language?';
-var languageAnswers = ['ruby', 'python', 'javascript'];
-var correctLanguageAnswer = languageAnswers[2];
+var languageAnswers = ['Ruby', 'Python', 'JavaScript'];
+var correctLanguageAnswer = 2;
 
 var instructorQuestion = 'What is the name of your instructor?';
-var instructorAnswers = ['john', 'jonas', 'james'];
-var correctInstructorAnswer = instructorAnswers[1];
+var instructorAnswers = ['John', 'Jonas', 'James'];
+var correctInstructorAnswer = 1;
 
 var coursesQuestion = 'Which is the best online web development course platform?';
-var coursesAnswers = ['pluralsight', 'teamtreehouse', 'udemy'];
-var correctCourseAnswer = 'udemy';
+var coursesAnswers = ['Pluralsight', 'Teamtreehouse', 'Udemy'];
+var correctCourseAnswer = 2;
 
 // Create a couple of questions (question objects) using the constructor
 var bestProgLang = new Question(languageQuestion, languageAnswers, correctLanguageAnswer);
@@ -65,17 +75,11 @@ var bestCoursePlatform = new Question(coursesQuestion, coursesAnswers, correctCo
 var questions = [bestProgLang, jsCourseInstructor, bestCoursePlatform];
 
 // log a random question and its answers to the console (using an IIFE)
-// function logQuestionAndAnswers () {
-//   var rndNum = Math.floor(Math.random() * 3);
-//   var randQuestion = questions[rndNum];
-//   randQuestion.logQuestionAndAnswers();
-//   };
-//
-// logQuestionAndAnswers();
-
-// Refactor to an IIFE
 (function () {
   var rndNum = Math.floor(Math.random() * 3);
   var randQuestion = questions[rndNum];
   randQuestion.logQuestionAndAnswers();
+  var answer = parseInt(prompt('Enter the number of the correct answer'));
+  var correctAnswer = randQuestion.correctAnswer;
+  randQuestion.checkAnswer(answer, correctAnswer);
 })();
