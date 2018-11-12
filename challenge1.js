@@ -25,6 +25,9 @@ of the correct answer such as you displayed it on Task 4.
 7. Suppose this code would be a plugin for other programmers to use in their code. So make sure
 that all your code is private and doesn't interfere with the other programmers code
 (Hint: we learned a special technique to do exactly that).
+
+<<How to do this? Wrap all the code in an IIFE (at least if it was all procedural). This is the main
+purpose of IIFEs>>
 */
 
 /*
@@ -43,6 +46,10 @@ don't have to, just do this with the tools you feel more comfortable at this poi
 11. Display the score in the console. Use yet another method for this.
 */
 
+// Wrap it all in an IIFE to "make sure that all your code is private and doesn't interfere
+// with other programmers code"
+(function () {
+
 // A function constructor is a function that is used to create objects with
 // the same properties / methods (passed in as arguments).
 var Question = function(question, answers, correctAnswer) {
@@ -51,7 +58,10 @@ var Question = function(question, answers, correctAnswer) {
   this.correctAnswer = correctAnswer;
 }
 
-// method to log the question and its answers to the console
+// Method to log the question and its answers to the console
+// [A method added on an object's prototype property (added via the protoype chain)
+// is not a method on every object created using the function constructor. It is
+// just available to each such object. Benefits of this?
 Question.prototype.logQuestionAndAnswers = function() {
     console.log(this.question);
     // Have to assign this.answers to a variable or forEach doesn't work (why?)
@@ -65,8 +75,8 @@ Question.prototype.logQuestionAndAnswers = function() {
 // score works because the checkAnswer method of the random question object
 // (randQuestionObj) which is called in playGame() has access to the score
 // variable in the global scope.
-Question.prototype.checkAnswer = function(userAnswer, correctAnswer) {
-    if (userAnswer == correctAnswer) {
+Question.prototype.checkAnswer = function(userAnswer) {
+    if (userAnswer == this.correctAnswer) {
       score += 1;
       console.log('Correct answer!');
       console.log('Your current score is: ' + score);
@@ -101,7 +111,7 @@ var score = 0;
 
 // Get and return a random question object
 function getRandQuestionObj() {
-  var rndNum = Math.floor(Math.random() * 3);
+  var rndNum = Math.floor(Math.random() * questions.length);
   return questions[rndNum];
 }
 
@@ -116,3 +126,5 @@ function playGame() {
 }
 
 playGame();
+
+})();
